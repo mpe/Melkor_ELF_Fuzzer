@@ -81,6 +81,14 @@ int PAGESIZE; // Set at runtime with getpagesize() in melkor.c
 /* ELF STUFF */
 /*** 32 - 64 BITS COMPAT ***/
 #if defined(__i386__)           /**** x86 ****/
+#define ELF_CLASS_32
+#elif defined(__x86_64__)       /**** x86_64 ****/
+#define ELF_CLASS_64
+#else
+#error  "Unsupported arch !"
+#endif
+
+#ifdef ELF_CLASS_32
 // Data Types
 #define Elf_Half Elf32_Half
 #define Elf_Word Elf32_Word
@@ -112,7 +120,7 @@ int PAGESIZE; // Set at runtime with getpagesize() in melkor.c
 
 #define HEX "%.8x"
 
-#elif defined(__x86_64__)       /**** x86_64 ****/
+#elif defined(ELF_CLASS_64)
 // Data Types
 #define Elf_Half Elf64_Half
 #define Elf_Word Elf64_Word
@@ -144,7 +152,7 @@ int PAGESIZE; // Set at runtime with getpagesize() in melkor.c
 
 #define HEX "%.16lx"
 #else
-#error  "Unsupported arch !"
+#error  "Unknown ELF class!"
 #endif
 
 
