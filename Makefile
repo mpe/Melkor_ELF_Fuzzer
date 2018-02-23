@@ -5,7 +5,7 @@
 # Mexico
 #
 
-CC = gcc
+CC = $(CROSS_COMPILE)gcc
 CFLAGS = -ggdb -Wall -DDEBUG
 INSTALLPATH = /usr/local/bin/
 SRC = src
