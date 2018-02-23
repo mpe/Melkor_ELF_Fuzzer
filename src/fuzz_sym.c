@@ -45,9 +45,9 @@ int sym1(void)
 	if(rand() % 2)
 		return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcSYM->st_size = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	if(rand() % 3 < 2)
 		orcSYM->st_size = getElf_Xword();
 	else
@@ -114,9 +114,9 @@ int sym3(void)
 
 int sym4(void)
 {
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcSYM->st_size = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	if(rand() % 3 < 2)
 		orcSYM->st_size = getElf_Xword();
 	else

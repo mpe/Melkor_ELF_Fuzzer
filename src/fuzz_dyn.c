@@ -186,9 +186,9 @@ int dyn8(void)
 	if(rand() % 2)
 		return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	Elf_Word d_val;
-#elif defined(__x86_64__)
+#else
 	Elf_Xword d_val;
 #endif
 
@@ -266,9 +266,9 @@ int dyn11(void)
 	if(rand() % 2)
 		return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcDYN->d_un.d_val = DT_RELA;
-#elif defined(__x86_64__)
+#else
 	orcDYN->d_un.d_val = DT_REL;
 #endif
 
@@ -314,9 +314,9 @@ int dyn13(void)
 	if(rand() % 3 < 2)
 		return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	Elf_Sword d_tag;
-#elif defined(__x86_64__)
+#else
 	Elf_Sxword d_tag;
 #endif
 
@@ -325,9 +325,9 @@ int dyn13(void)
 			if(d_tag != DT_PLTRELSZ)
 				break;
 	} else
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		d_tag = getElf_Word();
-#elif defined(__x86_64__)
+#else
 		d_tag = getElf_Xword();
 #endif
 
@@ -349,9 +349,9 @@ int dyn14(void)
 	if(rand() % 4 < 3)
 		return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	Elf_Sword d_tag;
-#elif defined(__x86_64__)
+#else
 	Elf_Sxword d_tag;
 #endif
 
@@ -363,9 +363,9 @@ int dyn14(void)
 				d_tag != DT_RELENT)
 				break;
 	} else
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		d_tag = getElf_Word();
-#elif defined(__x86_64__)
+#else
 		d_tag = getElf_Xword();
 #endif
 
@@ -384,9 +384,9 @@ int dyn15(void)
 	if(rand() % 5 < 3) // DT_NULL is fucking critical: is the end of _DYNAMIC[]
 		return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	Elf_Sword d_tag;
-#elif defined(__x86_64__)
+#else
 	Elf_Sxword d_tag;
 #endif
 
@@ -395,9 +395,9 @@ int dyn15(void)
 			if(d_tag != DT_NULL)
 				break;
 	} else
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		d_tag = getElf_Word();
-#elif defined(__x86_64__)
+#else
 		d_tag = getElf_Xword();
 #endif
 
@@ -459,9 +459,9 @@ int dyn17(void)
 	if(rand() % 2)
 		return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	Elf_Word d_val;
-#elif defined(__x86_64__)
+#else
 	Elf_Xword d_val;
 #endif
 
@@ -472,9 +472,9 @@ int dyn17(void)
 	} else {
 		d_val = orcDYN->d_un.d_val;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		d_val += 8; // A ptr in 64-bit is 8 bytes. Add 8 to 32-bit ELF
-#elif defined(__x86_64__)
+#else
 		d_val += 4; // Vice versa
 #endif
 	}
@@ -493,7 +493,7 @@ int dyn18(void)
 
 	// d_tag is a Sword (Signed Word)
 	if(rand() % 2){ // 50% chance to set d_tag to a negative number > 0x7fffffff
-#if defined(__x86_64__)
+#ifdef ELF_CLASS_64
 		if(rand() % 2)
 			orcDYN->d_tag = 0x8000000000000000 + (rand() % 0x7fffffff);
 		else

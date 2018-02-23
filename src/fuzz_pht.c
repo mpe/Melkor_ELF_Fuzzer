@@ -202,18 +202,18 @@ int pht4(void)
 		if(mode & NOTE)
 			return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	Elf_Word  p_memsz;
-#elif defined(__x86_64__)
+#else
 	Elf_Xword p_memsz;
 #endif
 	int r = rand();
 
 	if(r % 3 == 0){
 		orcPHT->p_filesz = 0;
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		while((p_memsz = getElf_Word()))
-#elif defined(__x86_64__)
+#else
 		while((p_memsz = getElf_Xword()))
 #endif
 			if(p_memsz % PAGESIZE == 0){
@@ -221,9 +221,9 @@ int pht4(void)
 				break;
 			}
 	} else if(r % 3 == 1){
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		orcPHT->p_filesz = getElf_Word();
-#elif defined(__x86_64__)
+#else
 		orcPHT->p_filesz = getElf_Xword();
 #endif
 		orcPHT->p_memsz = 0;
@@ -249,9 +249,9 @@ int pht5(void)
 		else
 			orcPHT->p_align = PAGESIZE + 1;
 	} else
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		orcPHT->p_align = getElf_Word();
-#elif defined(__x86_64__)
+#else
 		orcPHT->p_align = getElf_Xword();
 #endif
 
@@ -303,16 +303,16 @@ int pht7(void)
 		if(mode & NOTE)
 			return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	Elf_Word p_filesz;
-#elif defined(__x86_64__)
+#else
 	Elf_Xword p_filesz;
 #endif
 
 	if(rand() % 3 < 2){
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		while((p_filesz = getElf_Word()))
-#elif defined(__x86_64__)
+#else
 		while((p_filesz = getElf_Xword()))
 #endif
 			if(p_filesz >= orcPHT->p_memsz){
@@ -320,9 +320,9 @@ int pht7(void)
 				break;
 			}
 	} else
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		orcPHT->p_filesz = getElf_Word();
-#elif defined(__x86_64__)
+#else
 		orcPHT->p_filesz = getElf_Xword();
 #endif
 
@@ -339,9 +339,9 @@ int pht8(void)
 	if(mode & NOTE)
 		return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	Elf_Word p_filesz;
-#elif defined(__x86_64__)
+#else
 	Elf_Xword p_filesz;
 #endif
 
@@ -535,20 +535,20 @@ int pht16(void)
 	if(rand() % 3 == 0)
 		orcPHT->p_offset = getElf_Off();
 	orcPHT->p_vaddr  = getElf_Addr();
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcPHT->p_filesz = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	orcPHT->p_filesz = getElf_Xword();
 #endif
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcPHT->p_memsz = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	orcPHT->p_memsz = getElf_Xword();
 #endif
 	orcPHT->p_flags = getElf_Word();
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcPHT->p_align = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	orcPHT->p_align = getElf_Xword();
 #endif
 
@@ -570,20 +570,20 @@ int pht17(void)
 	if(rand() % 3 == 0)
 		orcPHT->p_offset = getElf_Off();
 	orcPHT->p_vaddr  = getElf_Addr();
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcPHT->p_filesz = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	orcPHT->p_filesz = getElf_Xword();
 #endif
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcPHT->p_memsz = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	orcPHT->p_memsz = getElf_Xword();
 #endif
 	orcPHT->p_flags = getElf_Word();
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcPHT->p_align = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	orcPHT->p_align = getElf_Xword();
 #endif
 
@@ -605,20 +605,20 @@ int pht18(void)
 	if(rand() % 3 == 0)
 		orcPHT->p_offset = getElf_Off();
 	orcPHT->p_vaddr  = getElf_Addr();
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcPHT->p_filesz = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	orcPHT->p_filesz = getElf_Xword();
 #endif
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcPHT->p_memsz = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	orcPHT->p_memsz = getElf_Xword();
 #endif
 	orcPHT->p_flags = getElf_Word();
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	orcPHT->p_align = getElf_Word();
-#elif defined(__x86_64__)
+#else
 	orcPHT->p_align = getElf_Xword();
 #endif
 
@@ -766,20 +766,20 @@ int pht22(void)
 		if(rand() % 3 == 0)
 			tmpPHT->p_offset = getElf_Off();
 		tmpPHT->p_vaddr  = getElf_Addr();
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		tmpPHT->p_filesz = getElf_Word();
-#elif defined(__x86_64__)
+#else
 		tmpPHT->p_filesz = getElf_Xword();
 #endif
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		tmpPHT->p_memsz = getElf_Word();
-#elif defined(__x86_64__)
+#else
 		tmpPHT->p_memsz = getElf_Xword();
 #endif
 		tmpPHT->p_flags = getElf_Word();
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		tmpPHT->p_align = getElf_Word();
-#elif defined(__x86_64__)
+#else
 		tmpPHT->p_align = getElf_Xword();
 #endif
 

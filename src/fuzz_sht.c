@@ -749,18 +749,18 @@ int sht20(void)
 		if(rand() % 2)
 			return 0;
 
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 	Elf_Word s;
-#elif defined(__x86_64__)
+#else
 	Elf_Xword s;
 #endif
 
 	int r = rand();
 
 	if(r % 3 == 0) // If running in 64 bits, set a size modulo the 32-bits struct's size and viceversa
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		s = sizeof(Elf64_Nhdr);
-#elif defined(__x86_64__)
+#else
 		s = sizeof(Elf32_Nhdr);
 #endif
 	else if(r % 3 == 1){
@@ -1481,9 +1481,9 @@ void fuzzSize()
 {
 	if((rand() % 4) < 3){ // 75% chance
 		if(rand() % 2)
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 			orcSHT->sh_size = getElf_Word();
-#elif defined(__x86_64__)
+#else
 			orcSHT->sh_size = getElf_Xword();
 #endif
 		else
@@ -1496,9 +1496,9 @@ void fuzzEntSize()
 {
 	if((rand() % 4) < 3){ // 75% chance
 		if(rand() % 2)
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 			orcSHT->sh_entsize = getElf_Word();
-#elif defined(__x86_64__)
+#else
 			orcSHT->sh_entsize = getElf_Xword();
 		else
 			orcSHT->sh_entsize = getElf_Half();
@@ -1540,9 +1540,9 @@ void fuzzFlags()
 		else
 			orcSHT->sh_flags &= ~SHF_EXECINSTR;
 	} else {
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		orcSHT->sh_flags = getElf_Word();
-#elif defined(__x86_64__)
+#else
 		orcSHT->sh_flags = getElf_Xword();
 #endif
 	}
@@ -1551,9 +1551,9 @@ void fuzzFlags()
 void fuzzAddrAlign()
 {
 	if(rand() % 2){ // 50% chance
-#if defined(__i386__)
+#ifdef ELF_CLASS_32
 		while((orcSHT->sh_addralign = getElf_Word()))
-#elif defined(__x86_64__)
+#else
 		while((orcSHT->sh_addralign = getElf_Xword()))
 #endif
 			// Bitwise: x & (x - 1) != 0 if x is NOT a power of 2
