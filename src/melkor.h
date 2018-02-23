@@ -84,6 +84,8 @@ int PAGESIZE; // Set at runtime with getpagesize() in melkor.c
 #define ELF_CLASS_32
 #elif defined(__x86_64__)       /**** x86_64 ****/
 #define ELF_CLASS_64
+#elif defined(__powerpc64__)	/**** ppc64/ppc64le ****/
+#define ELF_CLASS_64
 #else
 #error  "Unsupported arch !"
 #endif
